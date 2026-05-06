@@ -1,0 +1,50 @@
+import pandas as pd
+import nltk
+import string
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords 
+from nltk.stem import PorterStemmer , WordNetLemmatizer 
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+nltk.download('punkt')
+#`nltk.download('punkt_tab')
+nltk.download('stopwords')
+nltk.download('wordnet')
+nltk.download('averaged_perceptron_tagger')
+nltk.download('averaged_perceptron_tagger_eng')
+
+
+# Step 2: Sample document
+doc = "i am a computer engineering student from amrutvahini college, this this the DSBDA practical exam and this is better than DSA"
+print("Original Document:\n", doc)
+
+tokens = word_tokenize(doc)
+print("\nTokenization:\n", tokens)
+
+from nltk import pos_tag
+pos_tags = pos_tag(tokens)
+pos_tags
+
+stop_words = set(stopwords.words('english')) 
+token_no_stop = [word for word in tokens if word.lower() not in stop_words and word.isalpha()]
+token_no_stop
+
+
+stemmer = PorterStemmer()
+stemmer_word = [stemmer.stem(word) for word in token_no_stop]
+stemmer_word
+
+lemmatizer = WordNetLemmatizer()
+lemmatizer_word = [lemmatizer.lemmatize(word , pos='a') for word in token_no_stop]
+lemmatizer_word
+
+
+docs = [ doc , "i love engineering and DSBDA."]
+print(docs)
+
+vectorizer = TfidfVectorizer()
+x = vectorizer.fit_transform(docs)
+
+tfidf = pd.DataFrame(x.toarray() , columns = vectorizer.get_feature_names_out())
+print(tfidf)
+

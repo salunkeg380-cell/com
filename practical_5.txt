@@ -1,0 +1,82 @@
+# Step 1: Import necessary libraries
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score
+
+# Step 2: Load dataset
+df = pd.read_csv("Social_Network_Ads.csv")   # make sure file is in same folder
+
+# Step 3: Check dataset
+print(df.head())
+
+# Step 4: Define features and target
+X = df[['Age', 'EstimatedSalary']]
+y = df['Purchased']
+
+# Step 5: Split dataset
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.25, random_state=42
+)
+
+# Step 6: Feature Scaling
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
+# Step 7: Train logistic regression model
+model = LogisticRegression()
+model.fit(X_train, y_train)
+
+# Step 8: Predict test results
+y_pred = model.predict(X_test)
+# Show some predictions
+print("Predicted values:", y_pred[:5])
+
+# Step 9: Confusion matrix
+cm = confusion_matrix(y_test, y_pred)
+tn, fp, fn, tp = cm.ravel()
+print("\nConfusion Matrix:")
+print(cm)
+
+
+# Step 10: Evaluation metrics
+accuracy = accuracy_score(y_test, y_pred)
+error_rate = 1 - accuracy
+precision = precision_score(y_test, y_pred)
+recall = recall_score(y_test, y_pred)
+
+
+# Step 11: Display results
+print("True Positives (TP):", tp)
+print(f"False Positives (FP): {fp}")
+print(f"True Negatives (TN): {tn}")
+print(f"False Negatives (FN): {fn}")
+print(f"\nAccuracy: {accuracy:.2f}")
+print(f"Error Rate: {error_rate:.2f}")
+print(f"Precision: {precision:.2f}")
+print(f"Recall: {recall:.2f}")
+
+
+TN = cm[0][0]
+FP = cm[0][1]
+FN = cm[1][0]
+TP = cm[1][1]
+
+# Accuracy
+accuracy = (TP + TN) / (TP + TN + FP + FN)
+
+# Error Rate
+error_rate = (FP + FN) / (TP + TN + FP + FN)
+
+# Precision
+precision = TP / (TP + FP)
+
+# Recall
+recall = TP / (TP + FN)
+
+print("Accuracy:", accuracy)
+print("Error Rate:", error_rate)
+print("Precision:", precision)
+print("Recall:", recall)

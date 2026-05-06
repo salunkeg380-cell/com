@@ -1,0 +1,25 @@
+import numpy as nb
+import pandas as pd 
+
+df=pd.read_csv("Iris.csv")
+df
+
+df.describe()
+
+df.isnull().sum()
+
+print("mean is:\n\n" , df.mean(numeric_only=True))
+#print("std is :\n" , df.std(numeric_only=True))
+print("min is :\n" , df.min(numeric_only=True))
+#print("variance is :\n" , df.var(numeric_only=True))
+print("max is :\n" , df.max(numeric_only=True))
+print("count is :\n" , df.count(numeric_only=True))
+#print("Median is :\n" , df.median(numeric_only=True))
+
+df.Species.unique()
+
+df.groupby(df.Species)
+
+df.groupby(df.Species).count()
+
+print(df.groupby(df.Species).describe())

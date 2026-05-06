@@ -1,0 +1,54 @@
+# Import libraries
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Load dataset (built-in Titanic dataset from seaborn)
+data = sns.load_dataset('titanic')
+
+# Display first 5 rows
+print(data.head())
+
+# -----------------------------
+# 1. Identify patterns using Seaborn
+# -----------------------------
+
+# Count plot (Survival count)
+sns.countplot(x='survived', data=data)
+plt.title("Survival Count")
+plt.show()
+
+# Survival vs Gender
+sns.countplot(x='survived', hue='sex', data=data)
+plt.title("Survival based on Gender")
+plt.show()
+
+# Survival vs Class
+sns.countplot(x='class', hue='survived', data=data)
+plt.title("Survival based on Class")
+plt.show()
+
+# -----------------------------
+# 2. Histogram for Fare Distribution
+# -----------------------------
+
+plt.hist(x='fare',data=data .dropna())
+plt.title("Fare Distribution Histogram")
+plt.xlabel("Fare")
+plt.ylabel("Frequency")
+plt.show()
+
+# -----------------------------
+# 3. Analyze Distribution using Seaborn
+# -----------------------------
+
+sns.histplot(data['fare'], kde=True)
+plt.title("Fare Distribution with KDE")
+plt.show()
+
+# -----------------------------
+# 4. Identify Skewness
+# -----------------------------
+
+skewness = data['fare'].skew()
+print("Skewness of Fare:", skewness)

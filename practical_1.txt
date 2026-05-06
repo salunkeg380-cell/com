@@ -1,0 +1,50 @@
+import pandas as pd
+import numpy as np
+
+# Load dataset from online source
+#url = "https://raw.githubusercontent.com/datasciencedojo/datasets/master/titanic.csv"
+
+df = pd.read_csv("titanic.csv")
+
+# Show first 5 rows
+df.head()
+
+print("Shape of dataset:", df.shape)
+
+print("Columns:", df.columns)
+
+df.info()
+df.describe()
+
+#Check Missing Values
+print(df.isnull().sum())
+
+# Fill missing values
+df['Age'] = df['Age'].fillna(df['Age'].mean())
+
+df['Embarked'] = df['Embarked'].fillna(df['Embarked'].mode()[0])
+
+# Drop Cabin column (too many missing values)
+df.drop('Cabin', axis=1, inplace=True)
+
+# Check again
+print(df.isnull().sum())
+
+# Check data types
+print(df.dtypes)
+
+df
+
+#Convert Categorical Data to Numerica
+# Male = 0, Female = 1
+df['Sex'] = df['Sex'].replace({'male': 0, 'female': 1})
+
+df
+
+# Create dummy variables (One-Hot Encoding)
+df = pd.get_dummies(df, columns=['Embarked'])
+
+df.head()
+
+# Save cleaned data
+df.to_csv("cleaned_titanic.csv", index=False)

@@ -1,0 +1,54 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn import metrics
+
+# Load dataset from URL
+url = "https://raw.githubusercontent.com/selva86/datasets/master/BostonHousing.csv"
+df = pd.read_csv(url)
+
+# Show first 5 rows
+df.head()   
+
+
+df.info()
+
+df.describe()
+
+df.columns
+
+x = df.drop('medv', axis=1)
+y= df['medv']
+
+x_train ,x_test ,y_train ,y_test = train_test_split(x, y, test_size=0.2 , random_state=42)
+
+model = LinearRegression()
+model.fit(x_train, y_train)
+
+# Predict on test data
+y_pred = model.predict(X_test)
+
+# Show some predictions
+print("Predicted values:", y_pred[:5])
+
+# Mean Absolute Error
+print("MAE:", metrics.mean_absolute_error(y_test, y_pred))
+
+# Mean Squared Error
+print("MSE:", metrics.mean_squared_error(y_test, y_pred))
+
+# Root Mean Squared Error
+print("RMSE:", np.sqrt(metrics.mean_squared_error(y_test, y_pred)))
+
+# R2 Score
+print("R2 Score:", metrics.r2_score(y_test, y_pred))
+
+
+
+plt.scatter(y_test, y_pred)
+plt.xlabel("Actual Prices")
+plt.ylabel("Predicted Prices")
+plt.title("Actual vs Predicted Prices")
+plt.show()

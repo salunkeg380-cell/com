@@ -1,0 +1,40 @@
+# Import libraries
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Load dataset
+data = sns.load_dataset('titanic')
+
+# Display data
+print(data.head())
+
+# -----------------------------
+# 1. Boxplot for numeric feature (Age)
+# -----------------------------
+sns.boxplot(x='age',data=data)
+plt.title("Boxplot of Age")
+plt.show()
+
+# -----------------------------
+# 2. Compare Age vs Gender vs Survival
+# -----------------------------
+sns.boxplot(x='survived', y='age', hue='sex', data=data)
+plt.title("Age vs Gender vs Survival")
+plt.show()
+
+# -----------------------------
+# 3. Identify Outliers
+# -----------------------------
+# Using IQR method
+Q1 = data['age'].quantile(0.25)
+Q3 = data['age'].quantile(0.75)
+IQR = Q3 - Q1
+
+lower_bound = Q1 - 1.5 * IQR
+upper_bound = Q3 + 1.5 * IQR
+
+outliers = data[(data['age'] < lower_bound) | (data['age'] > upper_bound)]
+
+print("Outliers in Age:")
+print(outliers[['age']])

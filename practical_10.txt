@@ -1,0 +1,61 @@
+# Import libraries
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Load Iris dataset
+data = sns.load_dataset('iris')
+
+# Display first rows
+print(data.head())
+
+# -----------------------------
+# 1. Identify Feature Types
+# -----------------------------
+print("\nFeature Types:\n", data.dtypes)
+
+# -----------------------------
+# 2. Histograms for all numeric features
+# -----------------------------
+data.hist(figsize=(10, 8))
+plt.suptitle("Histograms of Iris Features")
+plt.show()
+
+# -----------------------------
+# 3. Boxplots for all numeric features
+# -----------------------------
+for column in data.columns[:-1]:  # exclude 'species'
+    sns.boxplot(x=data[column])
+    plt.title(f"Boxplot of {column}")
+    plt.show()
+
+# -----------------------------
+# 4. Compare distributions (Species-wise)
+# -----------------------------
+sns.boxplot(x='species', y='sepal_length', data=data)
+plt.title("Sepal Length Distribution by Species")
+plt.show()
+
+sns.boxplot(x='species', y='petal_length', data=data)
+plt.title("Petal Length Distribution by Species")
+plt.show()
+
+sns.scatterplot(x='species', y='sepal_length', data=data)
+plt.title("Sepal Length Distribution by Species")
+plt.show()
+
+# -----------------------------
+# 5. Detect Outliers using IQR
+# -----------------------------
+for column in data.columns[:-1]:
+    Q1 = data[column].quantile(0.25)
+    Q3 = data[column].quantile(0.75)
+    IQR = Q3 - Q1
+
+    lower = Q1 - 1.5 * IQR
+    upper = Q3 + 1.5 * IQR
+
+    outliers = data[(data[column] < lower) | (data[column] > upper)]
+
+    print(f"\nOutliers in {column}:")
+    print(outliers[[column]])
