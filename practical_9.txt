@@ -38,3 +38,25 @@ outliers = data[(data['age'] < lower_bound) | (data['age'] > upper_bound)]
 
 print("Outliers in Age:")
 print(outliers[['age']])
+🟢 Observations (What you see from graph)
+Age data is not evenly distributed
+There are some outliers (very young or very old passengers)
+Most passengers are in young to middle age group
+Female passengers are more in number in survival category
+Male passengers have higher death count
+Younger passengers (children) have higher survival
+Older passengers have lower survival
+In boxplot, median age of females is slightly lower than males
+Spread of age is wide (large variation)
+Survival is not equal across all groups
+🟢 Inferences (What you understand from it)
+Gender affects survival (females survived more)
+Age affects survival (younger people survived more)
+Priority might have been given to women and children
+Outliers show that some passengers had extreme ages
+Dataset is not normally distributed
+There is imbalance in survival data
+Age alone is not the only factor affecting survival
+Social factors like class and gender matter more
+Outliers may affect statistical results
+Data needs cleaning or preprocessing before modeling
